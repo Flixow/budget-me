@@ -1,33 +1,40 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import Navigation from 'components/Navigation/Navigation';
+import GlobalStyles from 'index.css';
+import theme from 'theme';
 
 import Budget from './pages/Budget';
 
 function App() {
   return (
-    <Router>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/budget">Budget</Link>
-        </li>
-      </ul>
-      <Switch>
-        <Route exact path="/">
-          Home page
-        </Route>
-        <Route path="/budget">
-          <Budget />
-        </Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Fragment>
+        <GlobalStyles />
+
+        <Router>
+          <Navigation
+            items={[
+              { content: 'Home', to: '/' },
+              { content: 'Budget', to: '/budget' },
+            ]}
+          />
+          <Switch>
+            <Route exact path="/">
+              {'Home page'}
+            </Route>
+            <Route path="/budget">
+              <Budget />
+            </Route>
+          </Switch>
+        </Router>
+      </Fragment>
+    </ThemeProvider>
   );
 }
 
