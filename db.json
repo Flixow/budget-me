@@ -1,0 +1,115 @@
+{
+  "parentCategories": [
+    {
+      "id": 1,
+      "name": "Zakupy"
+    },
+    {
+      "id": 2,
+      "name": "Rachunki i media"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Internet",
+      "parentCategoryId": 2
+    },
+    {
+      "id": 2,
+      "name": "Komórka",
+      "parentCategoryId": 2
+    },
+    {
+      "id": 3,
+      "name": "Czynsz i wynajem",
+      "parentCategoryId": 2
+    },
+    {
+      "id": 4,
+      "name": "Alkohol",
+      "parentCategoryId": 1
+    },
+    {
+      "id": 5,
+      "name": "Spozywcze",
+      "parentCategoryId": 1
+    },
+    {
+      "id": 6,
+      "name": "Chemia",
+      "parentCategoryId": 1
+    }
+  ],
+  "budgetCategories": [
+    {
+      "id": 1,
+      "budget": 120.47,
+      "categoryId": 1,
+      "budgetId": 1
+    },
+    {
+      "id": 2,
+      "budget": 39.99,
+      "categoryId": 2,
+      "budgetId": 1
+    },
+    {
+      "id": 3,
+      "budget": 723,
+      "categoryId": 3,
+      "budgetId": 1
+    },
+    {
+      "id": 4,
+      "budget": 30,
+      "categoryId": 4,
+      "budgetId": 1
+    },
+    {
+      "id": 5,
+      "budget": 450,
+      "categoryId": 5,
+      "budgetId": 1
+    },
+    {
+      "id": 6,
+      "budget": 80,
+      "categoryId": 6,
+      "budgetId": 1
+    }
+  ],
+  "budgets": [
+    {
+      "id": 1,
+      "name": "Kwiecień",
+      "totalAmount": 2400
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Dostawca internetu",
+      "amount": 120.47,
+      "categoryId": 1,
+      "date": "2019-12-15T20:39:41.768Z",
+      "budgetId": 1
+    },
+    {
+      "id": 2,
+      "description": "Dostawca sieci komórkowej",
+      "amount": 39.99,
+      "categoryId": 2,
+      "date": "2019-12-10T13:33:21.768Z",
+      "budgetId": 1
+    },
+    {
+      "id": 3,
+      "description": "Cotygodniowe zakupy",
+      "amount": 23.88,
+      "categoryId": 6,
+      "date": "2019-12-17T15:41:01.768Z",
+      "budgetId": 1
+    }
+  ]
+}
