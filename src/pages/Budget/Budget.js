@@ -114,6 +114,15 @@ Budget.defaultProps = {
         'name': 'Zakupy',
       },
     },
+    {
+      'id': 7,
+      'name': 'Kurs Udemy',
+      'parentCategoryId': 1,
+      'parentCategory': {
+        'id': 4,
+        'name': 'Edukacja',
+      },
+    },
   ],
 };
 

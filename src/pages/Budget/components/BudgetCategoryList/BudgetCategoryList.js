@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react';
 import { groupBy } from 'lodash';
 import { ToggleableList } from 'components';
-import { formatCurrency } from 'utils';
 
-import { CategoryAmount } from './BudgetCategoryList.css';
 import ParentCategory from './ParentCategory';
 import CategoryList from './CategoryList';
 
@@ -33,7 +31,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
         />
       )),
     })),
-    [budgetedCategoriesByParent, allCategories, budget.transactions],
+    [budgetedCategoriesByParent, allCategories, budget],
   );
   const totalSpent = budget.transactions
     .reduce((acc, transaction) => acc + transaction.amount, 0);
@@ -57,21 +55,13 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
 
   return (
     <div>
-      <ParentCategory name="Całkowity">
-        <CategoryAmount negative={budget.totalAmount < 0}>
-          {formatCurrency(restToSpent)}
-        </CategoryAmount>
-      </ParentCategory>
+      <ParentCategory name="Całkowity" amount={restToSpent} />
 
       <ToggleableList
         items={listItems}
       />
 
-      <ParentCategory name="Pozostałe kategorie">
-        <CategoryAmount negative={restToSpent < 0}>
-          {formatCurrency(availableForRestCategories)}
-        </CategoryAmount>
-      </ParentCategory>
+      <ParentCategory name="Pozostałe kategorie" amount={availableForRestCategories} />
     </div>
   );
 };
@@ -100,6 +90,12 @@ BudgetCategoryList.defaultProps = {
       'id': 4,
       'budget': 30,
       'categoryId': 4,
+      'budgetId': 1,
+    },
+    {
+      'id': 5,
+      'budget': 20,
+      'categoryId': 7,
       'budgetId': 1,
     },
   ],
