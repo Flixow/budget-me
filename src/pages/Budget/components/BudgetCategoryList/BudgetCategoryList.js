@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import 'styled-components/macro';
 import { groupBy } from 'lodash';
 import { ToggleableList } from 'components';
 
@@ -55,13 +56,29 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
 
   return (
     <div>
-      <ParentCategory name="Całkowity" amount={restToSpent} />
+      <div
+        css={`
+          border-bottom: ${({ theme }) => `5px solid ${theme.colors.gray.light}`};
+        `}
+      >
+        <ParentCategory
+          name={budget.name}
+          amount={restToSpent}
+        />
+      </div>
 
       <ToggleableList
         items={listItems}
       />
 
-      <ParentCategory name="Pozostałe kategorie" amount={availableForRestCategories} />
+      <div
+        css={`
+          border-top: ${({ theme }) => `5px solid ${theme.colors.gray.light}`};
+        `}
+      >
+        <ParentCategory name="Pozostałe kategorie" amount={availableForRestCategories} />
+      </div>
+
     </div>
   );
 };
