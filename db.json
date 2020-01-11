@@ -2,11 +2,11 @@
   "parentCategories": [
     {
       "id": 1,
-      "name": "Zakupy"
+      "name": "Shopping"
     },
     {
       "id": 2,
-      "name": "Rachunki i media"
+      "name": "Bills and utilities"
     }
   ],
   "categories": [
@@ -17,27 +17,27 @@
     },
     {
       "id": 2,
-      "name": "Komórka",
+      "name": "Mobile phone",
       "parentCategoryId": 2
     },
     {
       "id": 3,
-      "name": "Czynsz i wynajem",
+      "name": "Rent",
       "parentCategoryId": 2
     },
     {
       "id": 4,
-      "name": "Alkohol",
+      "name": "Alcohol",
       "parentCategoryId": 1
     },
     {
       "id": 5,
-      "name": "Spozywcze",
+      "name": "Grocery",
       "parentCategoryId": 1
     },
     {
       "id": 6,
-      "name": "Chemia",
+      "name": "Chemistry",
       "parentCategoryId": 1
     }
   ],
@@ -82,14 +82,14 @@
   "budgets": [
     {
       "id": 1,
-      "name": "Kwiecień",
+      "name": "April",
       "totalAmount": 2400
     }
   ],
   "transactions": [
     {
       "id": 1,
-      "description": "Dostawca internetu",
+      "description": "Internet provider",
       "amount": 120.47,
       "categoryId": 1,
       "date": "2019-12-15T20:39:41.768Z",
@@ -97,7 +97,7 @@
     },
     {
       "id": 2,
-      "description": "Dostawca sieci komórkowej",
+      "description": "Mobile network provider",
       "amount": 39.99,
       "categoryId": 2,
       "date": "2019-12-10T13:33:21.768Z",
@@ -105,7 +105,7 @@
     },
     {
       "id": 3,
-      "description": "Cotygodniowe zakupy",
+      "description": "Weekly shoping",
       "amount": 23.88,
       "categoryId": 6,
       "date": "2019-12-17T15:41:01.768Z",

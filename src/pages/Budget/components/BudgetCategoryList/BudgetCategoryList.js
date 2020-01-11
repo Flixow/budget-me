@@ -76,7 +76,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
           border-top: ${({ theme }) => `5px solid ${theme.colors.gray.light}`};
         `}
       >
-        <ParentCategory name="Pozostałe kategorie" amount={availableForRestCategories} />
+        <ParentCategory name="Other categories" amount={availableForRestCategories} />
       </div>
 
     </div>

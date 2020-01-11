@@ -22,12 +22,12 @@ const Budget = ({ budget, allCategories }) => {
 Budget.defaultProps = {
   budget: {
     'id': 1,
-    'name': 'Kwiecień',
+    'name': 'April',
     'totalAmount': 2400,
     'transactions': [
       {
         'id': 1,
-        'description': 'Dostawca internetu',
+        'description': 'Internet provider',
         'amount': 300,
         'categoryId': 1,
         'date': '2019-12-15T20:39:41.768Z',
@@ -35,7 +35,7 @@ Budget.defaultProps = {
       },
       {
         'id': 2,
-        'description': 'Dostawca sieci komórkowej',
+        'description': 'Mobile network provider',
         'amount': 50,
         'categoryId': 2,
         'date': '2019-12-10T13:33:21.768Z',
@@ -43,7 +43,7 @@ Budget.defaultProps = {
       },
       {
         'id': 3,
-        'description': 'Cotygodniowe zakupy',
+        'description': 'Weekly shoping',
         'amount': 20,
         'categoryId': 6,
         'date': '2019-12-17T15:41:01.768Z',
@@ -51,7 +51,7 @@ Budget.defaultProps = {
       },
       {
         'id': 4,
-        'description': 'Cotygodniowe zakupy #2',
+        'description': 'Weekly shoping #2',
         'amount': 12.48,
         'categoryId': 6,
         'date': '2019-12-17T12:41:01.768Z',
@@ -66,61 +66,61 @@ Budget.defaultProps = {
       'parentCategoryId': 2,
       'parentCategory': {
         'id': 2,
-        'name': 'Rachunki i media',
+        'name': 'Bills and utilities',
       },
     },
     {
       'id': 2,
-      'name': 'Komórka',
+      'name': 'Mobile phone',
       'parentCategoryId': 2,
       'parentCategory': {
         'id': 2,
-        'name': 'Rachunki i media',
+        'name': 'Bills and utilities',
       },
     },
     {
       'id': 3,
-      'name': 'Czynsz i wynajem',
+      'name': 'Rent',
       'parentCategoryId': 2,
       'parentCategory': {
         'id': 2,
-        'name': 'Rachunki i media',
+        'name': 'Bills and utilities',
       },
     },
     {
       'id': 4,
-      'name': 'Alkohol',
+      'name': 'Alcohol',
       'parentCategoryId': 1,
       'parentCategory': {
         'id': 1,
-        'name': 'Zakupy',
+        'name': 'Shopping',
       },
     },
     {
       'id': 5,
-      'name': 'Spozywcze',
+      'name': 'Grocery',
       'parentCategoryId': 1,
       'parentCategory': {
         'id': 1,
-        'name': 'Zakupy',
+        'name': 'Shopping',
       },
     },
     {
       'id': 6,
-      'name': 'Chemia',
+      'name': 'Chemistry',
       'parentCategoryId': 1,
       'parentCategory': {
         'id': 1,
-        'name': 'Zakupy',
+        'name': 'Shopping',
       },
     },
     {
       'id': 7,
-      'name': 'Kurs Udemy',
+      'name': 'Udemy Course',
       'parentCategoryId': 1,
       'parentCategory': {
         'id': 4,
-        'name': 'Edukacja',
+        'name': 'Education',
       },
     },
   ],
