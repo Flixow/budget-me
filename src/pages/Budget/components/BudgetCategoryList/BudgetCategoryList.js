@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 import 'styled-components/macro';
 import { groupBy } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { ToggleableList } from 'components';
 
 import ParentCategory from './ParentCategory';
-import CategoryList from './CategoryList';
+import CategoryItem from './CategoryItem';
 
 const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
+  const { t } = useTranslation();
   const budgetedCategoriesByParent = useMemo(
     () => groupBy(budgetedCategories, item => allCategories.find(category => category.id === item.categoryId).parentCategory.name),
     [budgetedCategories, allCategories],
@@ -24,7 +26,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
         />
       ),
       children: categories.map(item => (
-        <CategoryList
+        <CategoryItem
           key={item.id}
           categories={allCategories}
           transactions={budget.transactions}
@@ -76,7 +78,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
           border-top: ${({ theme }) => `5px solid ${theme.colors.gray.light}`};
         `}
       >
-        <ParentCategory name="Other categories" amount={availableForRestCategories} />
+        <ParentCategory name={t('Other categories')} amount={availableForRestCategories} />
       </div>
 
     </div>
