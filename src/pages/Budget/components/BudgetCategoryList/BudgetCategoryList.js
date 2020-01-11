@@ -1,13 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
+import { connect } from 'react-redux';
 import 'styled-components/macro';
 import { groupBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { ToggleableList } from 'components';
+import { selectParentCategory } from 'data/actions/budget.actions';
 
 import ParentCategory from './ParentCategory';
 import CategoryItem from './CategoryItem';
 
-const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
+
+const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectParentCategory }) => {
   const { t } = useTranslation();
   const budgetedCategoriesByParent = useMemo(
     () => groupBy(budgetedCategories, item => allCategories.find(category => category.id === item.categoryId).parentCategory.name),
@@ -19,7 +22,10 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
       id: parentName,
       Trigger: ({ onClick }) => (
         <ParentCategory
-          onClick={onClick}
+          onClick={useCallback(() => {
+            onClick();
+            selectParentCategory(parentName);
+          }, [onClick])}
           name={parentName}
           categories={categories}
           transactions={budget.transactions}
@@ -34,7 +40,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget }) => {
         />
       )),
     })),
-    [budgetedCategoriesByParent, allCategories, budget],
+    [budgetedCategoriesByParent, allCategories, budget, selectParentCategory],
   );
   const totalSpent = budget.transactions
     .reduce((acc, transaction) => acc + transaction.amount, 0);
@@ -120,4 +126,6 @@ BudgetCategoryList.defaultProps = {
   ],
 };
 
-export default BudgetCategoryList;
+export default connect(null, {
+  selectParentCategory,
+})(BudgetCategoryList);

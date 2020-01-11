@@ -17,7 +17,7 @@ const RootPage = () => {
 
   const changeLanguage = useCallback(lng => {
     i18n.changeLanguage(lng);
-  });
+  }, [i18n]);
 
   return (
     <Fragment>
