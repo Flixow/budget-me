@@ -53,6 +53,13 @@ const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId
   );
 };
 
-export default connect(state => ({
-  selectedParentCategoryId: state.budget.selectedParentCategoryId,
+BudgetTransactionList.defaultProps = {
+  allCategories: [],
+};
+
+export default connect(store => ({
+  selectedParentCategoryId: store.budget.selectedParentCategoryId,
+  allCategories: store.common.allCategories,
+  budget: store.budget.budget,
+  budgetedCategories: store.budget.budgetedCategories,
 }))(BudgetTransactionList);

@@ -51,6 +51,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
     })),
     [budgetedCategoriesByParent, allCategories, budget, selectParentCategory],
   );
+
   const totalSpent = budget.transactions
     .reduce((acc, transaction) => acc + transaction.amount, 0);
   const restToSpent = budget.totalAmount - totalSpent;
@@ -101,15 +102,20 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
           onClick={handleSelectRestParentCategory}
         />
       </div>
-
     </div>
   );
 };
 
 BudgetCategoryList.defaultProps = {
   budgetedCategories: [],
+  budget: {},
+  allCategories: [],
 };
 
-export default connect(null, {
+export default connect(store => ({
+  allCategories: store.common.allCategories,
+  budget: store.budget.budget,
+  budgetedCategories: store.budget.budgetedCategories,
+}), {
   selectParentCategory,
 })(BudgetCategoryList);

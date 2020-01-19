@@ -1,177 +1,50 @@
-import React from 'react';
-import { Wrapper } from 'components';
+import React, { useEffect, useMemo } from 'react';
+import { connect } from 'react-redux';
+import { Wrapper, LoadingIndicator } from 'components';
+import { fetchAllCategories } from 'data/actions/common.actions';
+import { fetchBudget, fetchBudgetedCategories } from 'data/actions/budget.actions';
 
 import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
-const Budget = ({ budget, allCategories, budgetedCategories }) => {
+const Budget = ({ fetchAllCategories, fetchBudget, fetchBudgetedCategories, commonState, budgetState }) => {
+  useEffect(() => {
+    fetchAllCategories();
+    fetchBudget(1);
+    fetchBudgetedCategories(1);
+  }, [fetchAllCategories]);
+  const isLoaded = useMemo(
+    () => commonState === 'LOADED' && Object.keys(budgetState).length === 0,
+    [commonState, budgetState],
+  );
+
   return (
     <Wrapper>
       <Grid>
         <section>
-          <BudgetCategoryList allCategories={allCategories} budget={budget} budgetedCategories={budgetedCategories} />
+          {isLoaded ? (
+            <BudgetCategoryList />
+          ) : (
+            <LoadingIndicator />
+          )}
         </section>
         <section>
-          <BudgetTransactionList allCategories={allCategories} budget={budget} budgetedCategories={budgetedCategories} />
+          {isLoaded ? (
+            <BudgetTransactionList />
+          ) : (
+            <LoadingIndicator />
+          )}
         </section>
       </Grid>
     </Wrapper>
   );
 };
 
-Budget.defaultProps = {
-  budget: {
-    'id': 1,
-    'name': 'April',
-    'totalAmount': 2400,
-    'transactions': [
-      {
-        'id': 1,
-        'description': 'Internet provider',
-        'amount': 300,
-        'categoryId': 1,
-        'date': '2019-12-15T20:39:41.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 2,
-        'description': 'Mobile network provider',
-        'amount': 50,
-        'categoryId': 2,
-        'date': '2019-12-10T13:33:21.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 3,
-        'description': 'Weekly shoping',
-        'amount': 20,
-        'categoryId': 6,
-        'date': '2019-12-17T15:41:01.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 4,
-        'description': 'Weekly shoping #2',
-        'amount': 12.48,
-        'categoryId': 6,
-        'date': '2019-12-17T12:41:01.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 5,
-        'description': 'Dinner in a restaurant',
-        'amount': 35.68,
-        'categoryId': null,
-        'date': '2019-12-22T15:33:11.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 5,
-        'description': 'Grocery shopping #1',
-        'amount': 12.38,
-        'categoryId': 5,
-        'date': '2019-12-18T13:38:41.768Z',
-        'budgetId': 1,
-      },
-    ],
-  },
-  budgetedCategories: [
-    {
-      'id': 1,
-      'budget': 100,
-      'categoryId': 1,
-      'budgetId': 1,
-    },
-    {
-      'id': 2,
-      'budget': 50,
-      'categoryId': 2,
-      'budgetId': 1,
-    },
-    {
-      'id': 3,
-      'budget': 500,
-      'categoryId': 3,
-      'budgetId': 1,
-    },
-    {
-      'id': 4,
-      'budget': 30,
-      'categoryId': 4,
-      'budgetId': 1,
-    },
-    {
-      'id': 5,
-      'budget': 20,
-      'categoryId': 7,
-      'budgetId': 1,
-    },
-  ],
-  allCategories: [
-    {
-      'id': 1,
-      'name': 'Internet',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 2,
-      'name': 'Mobile phone',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 3,
-      'name': 'Rent',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 4,
-      'name': 'Alcohol',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 5,
-      'name': 'Grocery',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 6,
-      'name': 'Chemistry',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 7,
-      'name': 'Udemy Course',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 4,
-        'name': 'Education',
-      },
-    },
-  ],
-};
-
-export default Budget;
+export default connect(state => ({
+  commonState: state.common.state,
+  budgetState: state.budget.loadingState,
+}), {
+  fetchAllCategories,
+  fetchBudget,
+  fetchBudgetedCategories,
+})(Budget);

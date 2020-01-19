@@ -7,6 +7,14 @@
     {
       "id": 2,
       "name": "Bills and utilities"
+    },
+    {
+      "id": 4,
+      "name": "Education"
+    },
+    {
+      "id": 5,
+      "name": "Entertainment"
     }
   ],
   "categories": [
@@ -39,6 +47,16 @@
       "id": 6,
       "name": "Chemistry",
       "parentCategoryId": 1
+    },
+    {
+      "id": 7,
+      "name": "Udemy course",
+      "parentCategoryId": 4
+    },
+    {
+      "id": 8,
+      "name": "Restaurants and pubs",
+      "parentCategoryId": 5
     }
   ],
   "budgetCategories": [
@@ -109,6 +127,30 @@
       "amount": 23.88,
       "categoryId": 6,
       "date": "2019-12-17T15:41:01.768Z",
+      "budgetId": 1
+    },
+    {
+      "id": 4,
+      "description": "Weekly shoping #2",
+      "amount": 12.48,
+      "categoryId": 6,
+      "date": "2019-12-17T12:41:01.768Z",
+      "budgetId": 1
+    },
+    {
+      "id": 5,
+      "description": "Dinner in a restaurant",
+      "amount": 35.68,
+      "categoryId": null,
+      "date": "2019-12-22T15:33:11.768Z",
+      "budgetId": 1
+    },
+    {
+      "id": 5,
+      "description": "Grocery shopping #1",
+      "amount": 12.38,
+      "categoryId": 5,
+      "date": "2019-12-18T13:38:41.768Z",
       "budgetId": 1
     }
   ]
