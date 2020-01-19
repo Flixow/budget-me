@@ -3,7 +3,7 @@ import {
 } from 'data/constants';
 
 const defaultState = {
-  selectedParentCategoryId: null,
+  selectedParentCategoryId: undefined,
 };
 
 export default function general(state = defaultState, action) {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 const Item = React.memo(({ item, isOpen, onTriggerClick }) => (
   <div>
@@ -7,8 +7,11 @@ const Item = React.memo(({ item, isOpen, onTriggerClick }) => (
   </div>
 ));
 
-const ToggleableList = ({ items }) => {
+const ToggleableList = ({ items, clickRef }) => {
   const [selectedItem, setSelectedItem] = useState();
+  useEffect(() => {
+    clickRef.current = setSelectedItem;
+  }, [selectedItem, clickRef]);
 
   return (
     <Fragment>

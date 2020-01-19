@@ -4,15 +4,15 @@ import { Wrapper } from 'components';
 import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
-const Budget = ({ budget, allCategories }) => {
+const Budget = ({ budget, allCategories, budgetedCategories }) => {
   return (
     <Wrapper>
       <Grid>
         <section>
-          <BudgetCategoryList allCategories={allCategories} budget={budget} />
+          <BudgetCategoryList allCategories={allCategories} budget={budget} budgetedCategories={budgetedCategories} />
         </section>
         <section>
-          <BudgetTransactionList allCategories={allCategories} budget={budget} />
+          <BudgetTransactionList allCategories={allCategories} budget={budget} budgetedCategories={budgetedCategories} />
         </section>
       </Grid>
     </Wrapper>
@@ -57,8 +57,56 @@ Budget.defaultProps = {
         'date': '2019-12-17T12:41:01.768Z',
         'budgetId': 1,
       },
+      {
+        'id': 5,
+        'description': 'Dinner in a restaurant',
+        'amount': 35.68,
+        'categoryId': null,
+        'date': '2019-12-22T15:33:11.768Z',
+        'budgetId': 1,
+      },
+      {
+        'id': 5,
+        'description': 'Grocery shopping #1',
+        'amount': 12.38,
+        'categoryId': 5,
+        'date': '2019-12-18T13:38:41.768Z',
+        'budgetId': 1,
+      },
     ],
   },
+  budgetedCategories: [
+    {
+      'id': 1,
+      'budget': 100,
+      'categoryId': 1,
+      'budgetId': 1,
+    },
+    {
+      'id': 2,
+      'budget': 50,
+      'categoryId': 2,
+      'budgetId': 1,
+    },
+    {
+      'id': 3,
+      'budget': 500,
+      'categoryId': 3,
+      'budgetId': 1,
+    },
+    {
+      'id': 4,
+      'budget': 30,
+      'categoryId': 4,
+      'budgetId': 1,
+    },
+    {
+      'id': 5,
+      'budget': 20,
+      'categoryId': 7,
+      'budgetId': 1,
+    },
+  ],
   allCategories: [
     {
       'id': 1,

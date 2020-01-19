@@ -5,18 +5,31 @@ import { formatDate, formatCurrency } from 'utils';
 
 import { List, ListItem } from './BudgetTransactionList.css';
 
-const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId }) => {
+const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId, budgetedCategories }) => {
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
-    if (!selectedParentCategoryId) {
+    if (typeof selectedParentCategoryId === 'undefined') {
       return budget.transactions;
     }
 
-    return budget.transactions.filter(transaction => {
-      const parentCategoryName = allCategories.find(category => category.id === transaction.categoryId).parentCategory.name;
+    if (selectedParentCategoryId === null) {
+      return budget.transactions.filter(transaction => {
+        const hasBudgetedCategory = budgetedCategories
+          .some(budgetedCategory => budgetedCategory.categoryId === transaction.categoryId);
 
-      return parentCategoryName === selectedParentCategoryId;
+        return !hasBudgetedCategory;
+      });
+    }
+
+    return budget.transactions.filter(transaction => {
+      try {
+        const parentCategoryName = allCategories.find(category => category.id === transaction.categoryId).parentCategory.name;
+
+        return parentCategoryName === selectedParentCategoryId;
+      } catch (error) {
+        return false;
+      }
     });
-  }, [selectedParentCategoryId, budget.transactions, allCategories]);
+  }, [selectedParentCategoryId, budget.transactions, allCategories, budgetedCategories]);
   const groupedTransactions = useMemo(() => groupBy(
     filteredTransactionsBySelectedParentCategory,
     item => new Date(item.date).getUTCDate(),
@@ -31,7 +44,7 @@ const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId
               <div>{transaction.description}</div>
               <div>{formatCurrency(transaction.amount)}</div>
               <div>{formatDate(transaction.date)}</div>
-              <div>{allCategories.find(category => category.id === transaction.categoryId).name}</div>
+              <div>{(allCategories.find(category => category.id === transaction.categoryId) || {}).name}</div>
             </ListItem>
           ))}
         </ul>

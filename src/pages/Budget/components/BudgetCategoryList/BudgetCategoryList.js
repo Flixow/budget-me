@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 import 'styled-components/macro';
 import { groupBy } from 'lodash';
@@ -12,10 +12,19 @@ import CategoryItem from './CategoryItem';
 
 const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectParentCategory }) => {
   const { t } = useTranslation();
+  const handleClickParentCategoryRef = useRef(null);
   const budgetedCategoriesByParent = useMemo(
     () => groupBy(budgetedCategories, item => allCategories.find(category => category.id === item.categoryId).parentCategory.name),
     [budgetedCategories, allCategories],
   );
+  const handleClearParentCategorySelect = useCallback(() => {
+    selectParentCategory();
+    handleClickParentCategoryRef.current();
+  }, [selectParentCategory, handleClickParentCategoryRef]);
+  const handleSelectRestParentCategory = useCallback(() => {
+    selectParentCategory(null);
+    handleClickParentCategoryRef.current();
+  }, [selectParentCategory, handleClickParentCategoryRef]);
 
   const listItems = useMemo(
     () => Object.entries(budgetedCategoriesByParent).map(([parentName, categories]) => ({
@@ -72,12 +81,13 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
         <ParentCategory
           name={budget.name}
           amount={restToSpent}
-          onClick={() => selectParentCategory()}
+          onClick={handleClearParentCategorySelect}
         />
       </div>
 
       <ToggleableList
         items={listItems}
+        clickRef={handleClickParentCategoryRef}
       />
 
       <div
@@ -85,7 +95,11 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
           border-top: ${({ theme }) => `5px solid ${theme.colors.gray.light}`};
         `}
       >
-        <ParentCategory name={t('Other categories')} amount={availableForRestCategories} />
+        <ParentCategory
+          name={t('Other categories')}
+          amount={availableForRestCategories}
+          onClick={handleSelectRestParentCategory}
+        />
       </div>
 
     </div>
@@ -93,38 +107,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
 };
 
 BudgetCategoryList.defaultProps = {
-  budgetedCategories: [
-    {
-      'id': 1,
-      'budget': 100,
-      'categoryId': 1,
-      'budgetId': 1,
-    },
-    {
-      'id': 2,
-      'budget': 50,
-      'categoryId': 2,
-      'budgetId': 1,
-    },
-    {
-      'id': 3,
-      'budget': 500,
-      'categoryId': 3,
-      'budgetId': 1,
-    },
-    {
-      'id': 4,
-      'budget': 30,
-      'categoryId': 4,
-      'budgetId': 1,
-    },
-    {
-      'id': 5,
-      'budget': 20,
-      'categoryId': 7,
-      'budgetId': 1,
-    },
-  ],
+  budgetedCategories: [],
 };
 
 export default connect(null, {
