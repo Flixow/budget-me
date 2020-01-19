@@ -72,6 +72,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
         <ParentCategory
           name={budget.name}
           amount={restToSpent}
+          onClick={() => selectParentCategory()}
         />
       </div>
 

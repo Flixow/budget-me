@@ -1,14 +1,26 @@
 import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import { formatDate, formatCurrency } from 'utils';
 
 import { List, ListItem } from './BudgetTransactionList.css';
 
-const BudgetTransactionList = ({ budget, allCategories }) => {
+const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId }) => {
+  const filteredTransactionsBySelectedParentCategory = useMemo(() => {
+    if (!selectedParentCategoryId) {
+      return budget.transactions;
+    }
+
+    return budget.transactions.filter(transaction => {
+      const parentCategoryName = allCategories.find(category => category.id === transaction.categoryId).parentCategory.name;
+
+      return parentCategoryName === selectedParentCategoryId;
+    });
+  }, [selectedParentCategoryId, budget.transactions, allCategories]);
   const groupedTransactions = useMemo(() => groupBy(
-    budget.transactions,
+    filteredTransactionsBySelectedParentCategory,
     item => new Date(item.date).getUTCDate(),
-  ), [budget.transactions]);
+  ), [filteredTransactionsBySelectedParentCategory]);
 
   return (
     <List>
@@ -28,4 +40,6 @@ const BudgetTransactionList = ({ budget, allCategories }) => {
   );
 };
 
-export default BudgetTransactionList;
+export default connect(state => ({
+  selectedParentCategoryId: state.budget.selectedParentCategoryId,
+}))(BudgetTransactionList);
