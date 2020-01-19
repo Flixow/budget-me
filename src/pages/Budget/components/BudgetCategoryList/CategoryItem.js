@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { formatCurrency } from 'utils';
 
 import { CategoryList as Root, CategoryAmount } from './BudgetCategoryList.css';
@@ -8,7 +7,6 @@ const CategoryItem = ({
   item,
   transactions, categories,
 }) => {
-  const { t } = useTranslation();
   const categoryTransactions = transactions.filter(transaction => transaction.categoryId === item.id);
   const spentOnCategory = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
   const totalLeft = item.budget
@@ -19,7 +17,7 @@ const CategoryItem = ({
   return (
     <Root>
       <span>
-        {t(name)}
+        {name}
       </span>
       <span>
         <CategoryAmount negative={totalLeft < 0}>
