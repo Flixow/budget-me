@@ -5,12 +5,13 @@ import { groupBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { ToggleableList } from 'components';
 import { selectParentCategory } from 'data/actions/budget.actions';
+import { totalSpentSelector, amountTakenSelector, notBudgetedExpensesSelector } from 'data/selectors/budget.selectors';
 
 import ParentCategory from './ParentCategory';
 import CategoryItem from './CategoryItem';
 
 
-const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectParentCategory }) => {
+const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSpent, amountTaken, notBudgetedExpenses, selectParentCategory }) => {
   const { t } = useTranslation();
   const handleClickParentCategoryRef = useRef(null);
   const budgetedCategoriesByParent = useMemo(
@@ -52,24 +53,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, selectP
     [budgetedCategoriesByParent, allCategories, budget, selectParentCategory],
   );
 
-  const totalSpent = budget.transactions
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
   const restToSpent = budget.totalAmount - totalSpent;
-
-  const amountTaken = budgetedCategories.reduce((acc, item) => {
-    const categoryTransactions = budget.transactions
-      .filter(transaction => transaction.categoryId === item.id);
-    const categoryExpenses = categoryTransactions
-      .reduce((acc, transaction) => acc + transaction.amount, 0);
-
-    return acc + Math.max(item.budget, categoryExpenses);
-  }, 0);
-
-  const notBudgetedTransactions = budget.transactions
-    .filter(transaction => !budgetedCategories.find(item => item.id === transaction.categoryId));
-  const notBudgetedExpenses = notBudgetedTransactions
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
-
   const availableForRestCategories = budget.totalAmount - amountTaken - notBudgetedExpenses;
 
   return (
@@ -116,6 +100,9 @@ export default connect(store => ({
   allCategories: store.common.allCategories,
   budget: store.budget.budget,
   budgetedCategories: store.budget.budgetedCategories,
+  totalSpent: totalSpentSelector(store),
+  amountTaken: amountTakenSelector(store),
+  notBudgetedExpenses: notBudgetedExpensesSelector(store),
 }), {
   selectParentCategory,
 })(BudgetCategoryList);
