@@ -22,7 +22,6 @@ const RootPage = () => {
   return (
     <Fragment>
       <GlobalStyles />
-
       <Router>
         <Navigation
           items={[

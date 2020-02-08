@@ -1,7 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Wrapper, LoadingIndicator, Button } from 'components';
+import { Wrapper, LoadingIndicator, Button, Modal } from 'components';
 import { fetchAllCategories } from 'data/actions/common.actions';
 import { fetchBudget, fetchBudgetedCategories } from 'data/actions/budget.actions';
 
@@ -39,6 +43,12 @@ const Budget = ({ fetchAllCategories, fetchBudget, fetchBudgetedCategories, comm
           )}
         </section>
       </Grid>
+
+      <Switch>
+        <Route exact path="/budget/transactions/new">
+          <Modal>mleko</Modal>
+        </Route>
+      </Switch>
     </Wrapper>
   );
 };
