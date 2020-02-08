@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Wrapper, LoadingIndicator } from 'components';
+import { useTranslation } from 'react-i18next';
+import { Wrapper, LoadingIndicator, Button } from 'components';
 import { fetchAllCategories } from 'data/actions/common.actions';
 import { fetchBudget, fetchBudgetedCategories } from 'data/actions/budget.actions';
 
@@ -8,6 +9,7 @@ import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
 const Budget = ({ fetchAllCategories, fetchBudget, fetchBudgetedCategories, commonState, budgetState }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     fetchAllCategories();
     fetchBudget(1);
@@ -29,6 +31,7 @@ const Budget = ({ fetchAllCategories, fetchBudget, fetchBudgetedCategories, comm
           )}
         </section>
         <section>
+          <Button to="/budget/transactions/new">{t('Add new transaction')}</Button>
           {isLoaded ? (
             <BudgetTransactionList />
           ) : (

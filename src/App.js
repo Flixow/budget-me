@@ -7,7 +7,7 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import GlobalStyles from 'index.css';
-import { LoadingIndicator, Navigation } from 'components';
+import { LoadingIndicator, Navigation, Button } from 'components';
 import theme from 'theme';
 
 import Budget from './pages/Budget';
@@ -31,8 +31,8 @@ const RootPage = () => {
           ]}
           RightElement={(
             <div>
-              <button onClick={() => changeLanguage('pl')}>pl</button>
-              <button onClick={() => changeLanguage('en')}>en</button>
+              <Button primary={i18n.language === 'pl'} onClick={() => changeLanguage('pl')}>pl</Button>
+              <Button primary={i18n.language === 'en'} onClick={() => changeLanguage('en')}>en</Button>
             </div>
           )}
         />
