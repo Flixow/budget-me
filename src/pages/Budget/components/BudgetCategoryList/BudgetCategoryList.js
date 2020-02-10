@@ -18,6 +18,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSp
     () => groupBy(budgetedCategories, item => allCategories.find(category => category.id === item.categoryId).parentCategory.name),
     [budgetedCategories, allCategories],
   );
+
   const handleClearParentCategorySelect = useCallback(() => {
     selectParentCategory();
     handleClickParentCategoryRef.current();

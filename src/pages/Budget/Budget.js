@@ -50,7 +50,7 @@ const Budget = ({
           )}
         </section>
         <section>
-          <Button to="/budget/transactions/new">{t('Add new transaction')}</Button>
+          <Button variant="regular" to="/budget/transactions/new">{t('Add new transaction')}</Button>
           {isLoaded ? (
             <BudgetTransactionList />
           ) : (

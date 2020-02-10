@@ -30,8 +30,20 @@ const RootPage = () => {
           ]}
           RightElement={(
             <div>
-              <Button primary={i18n.language === 'pl'} onClick={() => changeLanguage('pl')}>pl</Button>
-              <Button primary={i18n.language === 'en'} onClick={() => changeLanguage('en')}>en</Button>
+              <Button
+                variant="regular"
+                primary={i18n.language === 'pl'}
+                onClick={() => changeLanguage('pl')}
+              >
+                pl
+              </Button>
+              <Button
+                variant="regular"
+                primary={i18n.language === 'en'}
+                onClick={() => changeLanguage('en')}
+              >
+                en
+              </Button>
             </div>
           )}
         />
