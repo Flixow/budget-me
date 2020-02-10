@@ -5,7 +5,7 @@ const RootButton = styled.button`
   cursor: inherit;
   border: none;
   background-color: transparent;
-  cursor: ${props => props.to || props.onClick ? 'pointer' : 'default'};
+  cursor: ${props => props.to || props.onClick || props.type === 'submit' ? 'pointer' : 'default'};
 
   &:hover {
     opacity: .8;

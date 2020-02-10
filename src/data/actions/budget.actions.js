@@ -3,6 +3,7 @@ import {
   SET_SELECTED_PARENT_CATEGORY_ID,
   BUDGET_GET,
   BUDGETED_CATEGORIES_GET,
+  BUDGET_TRANSACTION_ADD,
 } from 'data/constants';
 
 export const selectParentCategory = name => {
@@ -28,6 +29,17 @@ export const fetchBudgetedCategories = id => dispatch => {
 
   return dispatch({
     type: BUDGETED_CATEGORIES_GET,
+    promise,
+    // showToast: true,
+    // tryAgain: () => dispatch(fetchAllCategories(data)),
+  });
+};
+
+export const addBudgetTransaction = ({ id, data }) => dispatch => {
+  const promise = API.budget.addBudgetTransaction({ budgetId: id, data });
+
+  return dispatch({
+    type: BUDGET_TRANSACTION_ADD,
     promise,
     // showToast: true,
     // tryAgain: () => dispatch(fetchAllCategories(data)),

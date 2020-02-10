@@ -13,7 +13,7 @@ const Navigation = ({ items, RightElement }) => {
         <List>
           {items.map(item => (
             <li key={item.to}>
-              <Button type="inline" to={item.to}>{t(item.content)}</Button>
+              <Button variant="inline" to={item.to}>{t(item.content)}</Button>
             </li>
           ))}
         </List>

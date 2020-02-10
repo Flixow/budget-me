@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { StyledRegularButton, StyledInlineButton } from './Button.css';
 
-const Button = ({ primary, type, children, ...props }) => {
+const Button = ({ primary, variant, children, ...props }) => {
   const { to } = props;
   const Component = useMemo(() => {
-    switch (type) {
+    switch (variant) {
       case 'inline':
         return StyledInlineButton;
 
@@ -17,7 +17,7 @@ const Button = ({ primary, type, children, ...props }) => {
       default:
         return StyledRegularButton;
     }
-  });
+  }, [variant]);
   const content = (
     <Component primary={primary} {...props}>
       {children}
@@ -36,7 +36,7 @@ const Button = ({ primary, type, children, ...props }) => {
 };
 
 Button.propTypes = {
-  type: PropTypes.oneOf(['inline', 'regular']).isRequired,
+  variant: PropTypes.oneOf(['inline', 'regular']).isRequired,
 };
 
 export default Button;
