@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,7 +7,7 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import GlobalStyles from 'index.css';
-import { LoadingIndicator, Navigation, Button } from 'components';
+import { SuspenseErrorBoundary, Navigation, Button } from 'components';
 import theme from 'theme';
 
 import Budget from './pages/Budget';
@@ -47,12 +47,15 @@ const RootPage = () => {
             </div>
           )}
         />
+
         <Switch>
           <Route exact path="/">
             {t('Home')}
           </Route>
           <Route path="/budget">
-            <Budget />
+            <SuspenseErrorBoundary>
+              <Budget />
+            </SuspenseErrorBoundary>
           </Route>
         </Switch>
       </Router>
@@ -65,9 +68,9 @@ const RootPage = () => {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={<LoadingIndicator />}>
+      <SuspenseErrorBoundary>
         <RootPage />
-      </Suspense>
+      </SuspenseErrorBoundary>
     </ThemeProvider>
   );
 }

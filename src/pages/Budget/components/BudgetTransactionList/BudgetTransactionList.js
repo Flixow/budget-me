@@ -2,10 +2,15 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import { formatDate, formatCurrency } from 'utils';
+import { useBudget, useBudgetedCategories, useAllCategories } from 'data/hooks';
 
 import { List, ListItem } from './BudgetTransactionList.css';
 
-const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId, budgetedCategories }) => {
+const BudgetTransactionList = ({ selectedParentCategoryId }) => {
+  const { data: budget } = useBudget(1);
+  const { data: budgetedCategories } = useBudgetedCategories(1);
+  const { data: allCategories } = useAllCategories();
+
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
     if (typeof selectedParentCategoryId === 'undefined') {
       return budget.transactions;
@@ -53,13 +58,6 @@ const BudgetTransactionList = ({ budget, allCategories, selectedParentCategoryId
   );
 };
 
-BudgetTransactionList.defaultProps = {
-  allCategories: [],
-};
-
 export default connect(store => ({
   selectedParentCategoryId: store.budget.selectedParentCategoryId,
-  allCategories: store.common.allCategories,
-  budget: store.budget.budget,
-  budgetedCategories: store.budget.budgetedCategories,
 }))(BudgetTransactionList);

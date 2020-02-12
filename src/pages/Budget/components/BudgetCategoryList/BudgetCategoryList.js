@@ -5,15 +5,45 @@ import { groupBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { ToggleableList } from 'components';
 import { selectParentCategory } from 'data/actions/budget.actions';
-import { totalSpentSelector, amountTakenSelector, notBudgetedExpensesSelector } from 'data/selectors/budget.selectors';
+import {
+  calculateTotalSpent,
+  calculateAmountTaken,
+  calculateNotBudgetedExpenses,
+  filterNotBudgetedTransactions,
+} from 'data/selectors/budget.selectors';
+import { useBudget, useBudgetedCategories, useAllCategories } from 'data/hooks';
 
 import ParentCategory from './ParentCategory';
 import CategoryItem from './CategoryItem';
 
 
-const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSpent, amountTaken, notBudgetedExpenses, selectParentCategory }) => {
+const BudgetCategoryList = ({ selectParentCategory }) => {
+  const { data: budget } = useBudget(1);
+  const { data: budgetedCategories } = useBudgetedCategories(1);
+  const { data: allCategories } = useAllCategories();
   const { t } = useTranslation();
+
   const handleClickParentCategoryRef = useRef(null);
+  const totalSpent = useMemo(
+    () => calculateTotalSpent(budget.transactions),
+    [budget],
+  );
+
+  const amountTaken = useMemo(
+    () => calculateAmountTaken(budgetedCategories, budget.transactions),
+    [budgetedCategories, budget],
+  );
+
+  const notBudgetedTransactions = useMemo(
+    () => filterNotBudgetedTransactions(budget.transactions, budgetedCategories),
+    [budget, budgetedCategories],
+  );
+
+  const notBudgetedExpenses = useMemo(
+    () => calculateNotBudgetedExpenses(notBudgetedTransactions),
+    [notBudgetedTransactions],
+  );
+
   const budgetedCategoriesByParent = useMemo(
     () => groupBy(budgetedCategories, item => allCategories.find(category => category.id === item.categoryId).parentCategory.name),
     [budgetedCategories, allCategories],
@@ -28,7 +58,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSp
     handleClickParentCategoryRef.current();
   }, [selectParentCategory, handleClickParentCategoryRef]);
 
-  const listItems = useMemo(
+  const getListItems = useCallback(
     () => Object.entries(budgetedCategoriesByParent).map(([parentName, categories]) => ({
       id: parentName,
       Trigger: ({ onClick }) => (
@@ -72,7 +102,7 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSp
       </div>
 
       <ToggleableList
-        items={listItems}
+        items={getListItems()}
         clickRef={handleClickParentCategoryRef}
       />
 
@@ -91,19 +121,6 @@ const BudgetCategoryList = ({ budgetedCategories, allCategories, budget, totalSp
   );
 };
 
-BudgetCategoryList.defaultProps = {
-  budgetedCategories: [],
-  budget: {},
-  allCategories: [],
-};
-
-export default connect(store => ({
-  allCategories: store.common.allCategories,
-  budget: store.budget.budget,
-  budgetedCategories: store.budget.budgetedCategories,
-  totalSpent: totalSpentSelector(store),
-  amountTaken: amountTakenSelector(store),
-  notBudgetedExpenses: notBudgetedExpensesSelector(store),
-}), {
+export default connect(null, {
   selectParentCategory,
 })(BudgetCategoryList);

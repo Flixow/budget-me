@@ -12,7 +12,6 @@ export default function promiseMiddleware() {
     next({ ...rest, type: REQUEST });
 
     return promise
-      .then(response => response.json())
       .then(req => {
         next({ ...rest, req, type: SUCCESS });
         return Promise.resolve();

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { ReactQueryConfigProvider } from 'react-query';
 import configureStore from 'data/store';
 
 import App from './App';
@@ -9,11 +10,17 @@ import * as serviceWorker from './serviceWorker';
 
 const store = configureStore();
 
+const queryConfig = {
+  suspense: true,
+};
+
 const renderApp = () => {
   return render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <ReactQueryConfigProvider config={queryConfig}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ReactQueryConfigProvider>,
     document.getElementById('root'),
   );
 };
