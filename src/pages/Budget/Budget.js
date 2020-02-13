@@ -1,42 +1,20 @@
-import React, { useCallback, lazy } from 'react';
+import React, { lazy } from 'react';
 import {
   Switch,
   Route,
 } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { Wrapper, Button, Modal, SuspenseErrorBoundary } from 'components';
-import { addBudgetTransaction } from 'data/actions/budget.actions';
-import API from 'data/fetch';
 
 import { Grid } from './Budget.css';
-import AddTransactionForm from './components/AddTransactionForm';
 
-const BudgetCategoryList = lazy(() => import('./components/BudgetCategoryList'));
-const BudgetTransactionList = lazy(() => import('./components/BudgetTransactionList'));
+const AddTransactionView = React.memo(lazy(() => import('./components/AddTransactionForm')));
+const BudgetCategoryList = React.memo(lazy(() => import('./components/BudgetCategoryList')));
+const BudgetTransactionList = React.memo(lazy(() => import('./components/BudgetTransactionList')));
 
-const Budget = ({
-  addBudgetTransaction,
-  budget,
-}) => {
-  const { data: allCategories } = useQuery(
-    ['allCategories'],
-    API.common.fetchAllCategories,
-  );
+const Budget = ({}) => {
   const [showTransactions, setShowTransactions] = React.useState(false);
   const { t } = useTranslation();
-  const history = useHistory();
-
-  const handleAddTransaction = useCallback(data => {
-    addBudgetTransaction({
-      id: budget.id,
-      data,
-    }).then(() => {
-      history.goBack();
-    });
-  }, [addBudgetTransaction, budget, history]);
 
   return (
     <Wrapper>
@@ -62,11 +40,9 @@ const Budget = ({
       <Switch>
         <Route exact path="/budget/transactions/new">
           <Modal>
-            <AddTransactionForm
-              onSubmit={handleAddTransaction}
-              categories={allCategories}
-              groupCategoriesBy="parentCategory.name"
-            />
+            <SuspenseErrorBoundary>
+              <AddTransactionView />
+            </SuspenseErrorBoundary>
           </Modal>
         </Route>
       </Switch>
@@ -74,6 +50,4 @@ const Budget = ({
   );
 };
 
-export default connect(null, {
-  addBudgetTransaction,
-})(Budget);
+export default Budget;

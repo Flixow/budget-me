@@ -13,7 +13,7 @@ const AddTransactionForm = ({ onSubmit = noop, categories, groupCategoriesBy }) 
       .map(([key, categories]) => (
         <optgroup key={key} label={key}>
           {categories.map(category => (
-            <option value={category.id}>{category.name}</option>
+            <option key={category.id} value={category.id}>{category.name}</option>
           ))}
         </optgroup>
       )) : (

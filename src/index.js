@@ -12,6 +12,7 @@ const store = configureStore();
 
 const queryConfig = {
   suspense: true,
+  refetchAllOnWindowFocus: false,
 };
 
 const renderApp = () => {
