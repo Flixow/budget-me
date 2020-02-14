@@ -1,15 +1,16 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
+import React, { useMemo, useContext } from 'react';
 import { groupBy } from 'lodash';
+import { BudgetContext } from 'data/context';
 import { formatDate, formatCurrency } from 'utils';
 import { useBudget, useBudgetedCategories, useAllCategories } from 'data/hooks';
 
 import { List, ListItem } from './BudgetTransactionList.css';
 
-const BudgetTransactionList = ({ selectedParentCategoryId }) => {
+const BudgetTransactionList = () => {
   const { data: budget } = useBudget(1);
   const { data: budgetedCategories } = useBudgetedCategories(1);
   const { data: allCategories } = useAllCategories();
+  const { selectedParentCategoryId } = useContext(BudgetContext.store);
 
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
     if (typeof selectedParentCategoryId === 'undefined') {
@@ -58,6 +59,4 @@ const BudgetTransactionList = ({ selectedParentCategoryId }) => {
   );
 };
 
-export default connect(store => ({
-  selectedParentCategoryId: store.budget.selectedParentCategoryId,
-}))(BudgetTransactionList);
+export default BudgetTransactionList;

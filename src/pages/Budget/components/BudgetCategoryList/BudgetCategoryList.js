@@ -1,10 +1,9 @@
-import React, { useMemo, useCallback, useRef } from 'react';
-import { connect } from 'react-redux';
+import React, { useMemo, useCallback, useRef, useContext } from 'react';
 import 'styled-components/macro';
 import { groupBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { ToggleableList } from 'components';
-import { selectParentCategory } from 'data/actions/budget.actions';
+import { BudgetContext } from 'data/context';
 import {
   calculateTotalSpent,
   calculateAmountTaken,
@@ -17,10 +16,11 @@ import ParentCategory from './ParentCategory';
 import CategoryItem from './CategoryItem';
 
 
-const BudgetCategoryList = ({ selectParentCategory }) => {
+const BudgetCategoryList = () => {
   const { data: budget } = useBudget(1);
   const { data: budgetedCategories } = useBudgetedCategories(1);
   const { data: allCategories } = useAllCategories();
+  const { selectParentCategory } = useContext(BudgetContext.store);
   const { t } = useTranslation();
 
   const handleClickParentCategoryRef = useRef(null);
@@ -121,6 +121,4 @@ const BudgetCategoryList = ({ selectParentCategory }) => {
   );
 };
 
-export default connect(null, {
-  selectParentCategory,
-})(BudgetCategoryList);
+export default BudgetCategoryList;
