@@ -13,7 +13,7 @@ const AddTransactionView = React.memo(lazy(() => import('./components/AddTransac
 const BudgetCategoryList = React.memo(lazy(() => import('./components/BudgetCategoryList')));
 const BudgetTransactionList = React.memo(lazy(() => import('./components/BudgetTransactionList')));
 
-const Budget = ({}) => {
+const Budget = () => {
   const [showTransactions, setShowTransactions] = React.useState(false);
   const { t } = useTranslation();
 

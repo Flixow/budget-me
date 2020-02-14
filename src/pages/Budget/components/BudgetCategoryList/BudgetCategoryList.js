@@ -20,7 +20,8 @@ const BudgetCategoryList = () => {
   const { data: budget } = useBudget(1);
   const { data: budgetedCategories } = useBudgetedCategories(1);
   const { data: allCategories } = useAllCategories();
-  const { selectParentCategory } = useContext(BudgetContext.store);
+  const { dispatch } = useContext(BudgetContext.store);
+  const selectParentCategory = useCallback(id => dispatch({ type: 'selectParentCategory', payload: id }), [dispatch]);
   const { t } = useTranslation();
 
   const handleClickParentCategoryRef = useRef(null);
