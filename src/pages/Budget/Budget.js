@@ -1,129 +1,56 @@
-import React from 'react';
-import { Wrapper } from 'components';
+import React, { lazy } from 'react';
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { BudgetContext } from 'data/context';
+import { Wrapper, Button, Modal, SuspenseErrorBoundary } from 'components';
 
-import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
-const Budget = ({ budget, allCategories }) => {
-  return (
-    <Wrapper>
-      <Grid>
-        <section>
-          <BudgetCategoryList allCategories={allCategories} budget={budget} />
-        </section>
-        <section>
-          <BudgetTransactionList allCategories={allCategories} budget={budget} />
-        </section>
-      </Grid>
-    </Wrapper>
-  );
-};
+const AddTransactionView = React.memo(lazy(() => import('./components/AddTransactionForm')));
+const BudgetCategoryList = React.memo(lazy(() => import('./components/BudgetCategoryList')));
+const BudgetTransactionList = React.memo(lazy(() => import('./components/BudgetTransactionList')));
 
-Budget.defaultProps = {
-  budget: {
-    'id': 1,
-    'name': 'April',
-    'totalAmount': 2400,
-    'transactions': [
-      {
-        'id': 1,
-        'description': 'Internet provider',
-        'amount': 300,
-        'categoryId': 1,
-        'date': '2019-12-15T20:39:41.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 2,
-        'description': 'Mobile network provider',
-        'amount': 50,
-        'categoryId': 2,
-        'date': '2019-12-10T13:33:21.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 3,
-        'description': 'Weekly shoping',
-        'amount': 20,
-        'categoryId': 6,
-        'date': '2019-12-17T15:41:01.768Z',
-        'budgetId': 1,
-      },
-      {
-        'id': 4,
-        'description': 'Weekly shoping #2',
-        'amount': 12.48,
-        'categoryId': 6,
-        'date': '2019-12-17T12:41:01.768Z',
-        'budgetId': 1,
-      },
-    ],
-  },
-  allCategories: [
-    {
-      'id': 1,
-      'name': 'Internet',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 2,
-      'name': 'Mobile phone',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 3,
-      'name': 'Rent',
-      'parentCategoryId': 2,
-      'parentCategory': {
-        'id': 2,
-        'name': 'Bills and utilities',
-      },
-    },
-    {
-      'id': 4,
-      'name': 'Alcohol',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 5,
-      'name': 'Grocery',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 6,
-      'name': 'Chemistry',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 1,
-        'name': 'Shopping',
-      },
-    },
-    {
-      'id': 7,
-      'name': 'Udemy Course',
-      'parentCategoryId': 1,
-      'parentCategory': {
-        'id': 4,
-        'name': 'Education',
-      },
-    },
-  ],
+const Budget = () => {
+  const [showTransactions, setShowTransactions] = React.useState(false);
+  const { t } = useTranslation();
+
+  return (
+    <BudgetContext.Provider>
+      <Wrapper>
+        <Grid>
+          <section>
+            <SuspenseErrorBoundary>
+              <BudgetCategoryList />
+            </SuspenseErrorBoundary>
+          </section>
+          <section>
+            <Button variant="regular" to="/budget/transactions/new">{t('Add new transaction')}</Button>
+            <Button variant="regular" onClick={() => setShowTransactions(!showTransactions)}>
+              {!showTransactions ? t('Show transactions') : t('Hide transactions')}
+            </Button>
+            <SuspenseErrorBoundary>
+              {showTransactions && (
+                <BudgetTransactionList />
+              )}
+            </SuspenseErrorBoundary>
+          </section>
+        </Grid>
+
+        <Switch>
+          <Route exact path="/budget/transactions/new">
+            <Modal>
+              <SuspenseErrorBoundary>
+                <AddTransactionView />
+              </SuspenseErrorBoundary>
+            </Modal>
+          </Route>
+        </Switch>
+      </Wrapper>
+    </BudgetContext.Provider>
+  );
 };
 
 export default Budget;

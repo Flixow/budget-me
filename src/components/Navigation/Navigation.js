@@ -1,21 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Wrapper } from 'components';
+import { useTranslation } from 'react-i18next';
+import { Button } from 'components';
 
-import { Container, List } from './Navigation.css';
+import { Container, NavigationWrapper, List } from './Navigation.css';
 
-const Navigation = ({ items }) => {
+const Navigation = ({ items, RightElement }) => {
+  const { t } = useTranslation();
+
   return (
     <Container>
-      <Wrapper>
+      <NavigationWrapper>
         <List>
           {items.map(item => (
             <li key={item.to}>
-              <Link to={item.to}>{item.content}</Link>
+              <Button variant="inline" to={item.to}>{t(item.content)}</Button>
             </li>
           ))}
         </List>
-      </Wrapper>
+        {RightElement}
+      </NavigationWrapper>
     </Container>
   );
 };

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { formatCurrency } from 'utils';
 
 import { CategoryList as Root, CategoryAmount } from './BudgetCategoryList.css';
 
-const CategoryList = ({
+const CategoryItem = ({
   item,
   transactions, categories,
 }) => {
@@ -12,11 +12,12 @@ const CategoryList = ({
   const totalLeft = item.budget
     ? item.budget - spentOnCategory
     : null;
+  const name = useMemo(() => categories.find(category => category.id === item.categoryId).name, [categories, item]);
 
   return (
     <Root>
       <span>
-        {categories.find(category => category.id === item.categoryId).name}
+        {name}
       </span>
       <span>
         <CategoryAmount negative={totalLeft < 0}>
@@ -27,9 +28,9 @@ const CategoryList = ({
   );
 };
 
-CategoryList.defaultProps = {
+CategoryItem.defaultProps = {
   transactions: [],
   categories: [],
 };
 
-export default CategoryList;
+export default CategoryItem;
