@@ -2,8 +2,8 @@
   "files": {
     "static/js/0.862f6f84.chunk.js": "/budget-me/static/js/0.862f6f84.chunk.js",
     "static/js/0.862f6f84.chunk.js.map": "/budget-me/static/js/0.862f6f84.chunk.js.map",
-    "main.js": "/budget-me/static/js/main.cb229324.chunk.js",
-    "main.js.map": "/budget-me/static/js/main.cb229324.chunk.js.map",
+    "main.js": "/budget-me/static/js/main.39b8dc50.chunk.js",
+    "main.js.map": "/budget-me/static/js/main.39b8dc50.chunk.js.map",
     "runtime-main.js": "/budget-me/static/js/runtime-main.3aaae230.js",
     "runtime-main.js.map": "/budget-me/static/js/runtime-main.3aaae230.js.map",
     "static/js/3.c86799ec.chunk.js": "/budget-me/static/js/3.c86799ec.chunk.js",
@@ -17,7 +17,7 @@
     "static/js/7.d155092e.chunk.js": "/budget-me/static/js/7.d155092e.chunk.js",
     "static/js/7.d155092e.chunk.js.map": "/budget-me/static/js/7.d155092e.chunk.js.map",
     "index.html": "/budget-me/index.html",
-    "precache-manifest.9d85218b3a2656a67eceefdfc659a5b5.js": "/budget-me/precache-manifest.9d85218b3a2656a67eceefdfc659a5b5.js",
+    "precache-manifest.fa7db55de76b6952b49c336027ea4804.js": "/budget-me/precache-manifest.fa7db55de76b6952b49c336027ea4804.js",
     "service-worker.js": "/budget-me/service-worker.js",
     "static/js/0.862f6f84.chunk.js.LICENSE": "/budget-me/static/js/0.862f6f84.chunk.js.LICENSE",
     "static/js/3.c86799ec.chunk.js.LICENSE": "/budget-me/static/js/3.c86799ec.chunk.js.LICENSE"
@@ -25,6 +25,6 @@
   "entrypoints": [
     "static/js/runtime-main.3aaae230.js",
     "static/js/3.c86799ec.chunk.js",
-    "static/js/main.cb229324.chunk.js"
+    "static/js/main.39b8dc50.chunk.js"
   ]
 }
