@@ -1,5 +1,6 @@
 {
   "name": "udemy-course-budget",
+  "homepage": "http://flixow.github.io/budget-me",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +10,9 @@
     "eject": "react-scripts eject",
     "dev": "yarn start:db --quiet & yarn start",
     "start:db": "json-server -w db.json --port 3001 --middlewares ./db-middleware.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "husky": {
     "hooks": {
@@ -42,6 +45,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-react": "^7.17.0",
+    "gh-pages": "^2.2.0",
     "husky": "^3.1.0"
   },
   "browserslist": {
